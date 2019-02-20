@@ -98,5 +98,60 @@ list.print()
 list.delete(10086)
 list.print()
 print(list.findByIndex(3))
-# list.insert(3, 0)
-# list.print()
+
+print('--------------分割线--------------')
+
+
+class LListSingleLoop: # 循环单链表的实现
+    def __init__(self):
+        self._rear = None  # 指向尾节点
+
+    def is_empty(self):
+        return self._rear is None
+
+    def add(self, ele):
+        q = NodeList(ele)
+        if self._rear is None:  # 如果是空链表，则建立一个节点的环
+            q.next = q
+            self._rear = q
+        else:
+            q.next = self._rear.next
+            self._rear.next = q
+
+    def append(self, ele):
+        self.add(ele)
+        self._rear = self._rear.next
+
+    def pop(self):
+        if self._rear is None:
+            print('the list is none')
+        p = self._rear.next
+        if self._rear is p:
+            self._rear = None
+        else:
+            self._rear.next = p.next
+        return p.ele
+
+    def print(self):
+        if self.is_empty():
+            print('暂无list')
+        else:
+            current = self._rear
+            pri = []
+            count = 0
+            while True:
+                if current is self._rear and count > 0:
+                    break
+                pri.append(current.ele)
+                current = current.next
+                count += 1
+            print(pri)
+
+
+listLoop = LListSingleLoop()
+listLoop.add('a')
+listLoop.add('b')
+listLoop.add('c')
+listLoop.append('d')
+print('被pop的元素是' + listLoop.pop())
+listLoop.print()
