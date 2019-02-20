@@ -52,12 +52,27 @@ class LListSingle: # 单向链表的实现
             print('not fond')
             return
         if index == 0:
-            return self._head.elem
+            return self._head.ele
+        current = self._head
         while index:
-            index = index -1
+            index = index - 1
+            pre, current = current, current.next
+        return current.ele
 
 
-    def delete(self):
+    def delete(self,ele):
+        pre, found, curr = None, False, self._head
+        while not found and (curr is not None):
+            if curr.ele == ele:
+                found = True
+            else:
+                pre, curr = curr, curr.next
+        if found == False:
+            print("not found {0}".format(ele))
+        elif curr == self._head:  # 删除的是头元素
+            self._head = self._head.next
+        else:
+            pre.next = curr.next
 
 
     def print(self):
@@ -78,6 +93,10 @@ list.add(1)
 list.add(2)
 list.insert(3, 0)
 list.insert(4, 1)
+list.insert(10086, 3)
 list.print()
+list.delete(10086)
+list.print()
+print(list.findByIndex(3))
 # list.insert(3, 0)
 # list.print()
